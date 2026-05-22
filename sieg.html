@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="'Siegfredo' — figurative sculpture by Craig Halliday. Life size, clay, 2003.">
+  <title>Siegfredo — Craig Halliday</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="sculpture-page">
+
+  <header class="site-header">
+    <a href="./index.html" class="site-title">Craig Halliday</a>
+    <nav class="site-nav">
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html" class="active">Gallery</a>
+      <a href="./about.html">About</a>
+      <a href="mailto:craig_halliday@mac.com">Contact</a>
+    </nav>
+  </header>
+
+  <main class="sculpture-viewer">
+
+    <div class="sculpture-main">
+      <img id="main-img" src="./images/sieg1.jpg" alt="Siegfredo — view 1">
+    </div>
+
+    <div class="sculpture-thumbs">
+      <img class="s-thumb active" src="./images/sieg1.jpg" alt="View 1" data-index="0">
+      <img class="s-thumb" src="./images/sieg2.jpg" alt="View 2" data-index="1">
+    </div>
+
+    <div class="sculpture-controls">
+      <button class="s-btn" id="prev-btn">&#8592; Prev</button>
+      <span class="sculpture-count" id="count">1 / 2</span>
+      <button class="s-btn" id="next-btn">Next &#8594;</button>
+    </div>
+
+    <div class="sculpture-info">
+      <div class="sculpture-title">&lsquo;Siegfredo&rsquo;</div>
+      <div class="sculpture-meta">Life size &middot; Clay &middot; 2003</div>
+      <a href="./gallery.html" class="back-link">&#8592; Back to Gallery</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Craig Halliday &mdash; Figurative Sculptor</span>
+    <a href="mailto:craig_halliday@mac.com">craig_halliday@mac.com</a>
+  </footer>
+
+  <script>
+    const images = ['./images/sieg1.jpg', './images/sieg2.jpg'];
+    let current = 0;
+    const mainImg = document.getElementById('main-img');
+    const thumbs = document.querySelectorAll('.s-thumb');
+    const count = document.getElementById('count');
+
+    function showImage(index) {
+      current = (index + images.length) % images.length;
+      mainImg.classList.add('fading');
+      setTimeout(() => {
+        mainImg.src = images[current];
+        mainImg.alt = 'Siegfredo — view ' + (current + 1);
+        mainImg.classList.remove('fading');
+      }, 150);
+      thumbs.forEach((t, i) => t.classList.toggle('active', i === current));
+      count.textContent = (current + 1) + ' / ' + images.length;
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => showImage(current - 1));
+    document.getElementById('next-btn').addEventListener('click', () => showImage(current + 1));
+    thumbs.forEach((t, i) => t.addEventListener('click', () => showImage(i)));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') showImage(current - 1);
+      if (e.key === 'ArrowRight') showImage(current + 1);
+    });
+  </script>
+
+</body>
+</html>
